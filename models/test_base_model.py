@@ -32,9 +32,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(prev_time, base.updated_at)
 
     def test_attr_classes(self):
-        """
-        checks if the right classes were use to generate attributes
-        """
+        """checks classes that generate attributes"""
+
         base = BaseModel()
         base2 = BaseModel()
         self.assertIsInstance(base.id, str)
@@ -43,9 +42,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(base.id, base2.id)
 
     def test_save(self):
-        """
-        tests the save method
-        """
+        """funtion that tests the save method"""
+
         base = BaseModel()
         prevtime = base.updated_at
         base.save()
