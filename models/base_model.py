@@ -1,27 +1,26 @@
 #!/usr/bin/python3
 
-"""
-Defines all common attributes/methods for other classes
-"""
+"""Defines all common attributes/methods for other classes"""
 
 import uuid
 from datetime import datetime
 
 
 class BaseModel:
-    """
-    Defines all common attributs/methods for other classes
-    """
+    """Defines all common attributs/methods for other classes"""
+
     def __init__(self, *args, **kwargs):
-        """
-        Initializes an instance
-        """
+        """Initialize instance attributes"""
+
         if kwargs is not None and len(kwargs) != 0:
+
             if '__class__' in kwargs:
                 del kwargs['__class__']
+
             kwargs['created_at'] = datetime.fromisoformat(kwargs['created_at'])
             kwargs['updated_at'] = datetime.fromisoformat(kwargs['updated_at'])
             self.__dict__.update(kwargs)
+
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
