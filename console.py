@@ -108,46 +108,48 @@ saves it, and prints the id"""
                 except KeyError:
                     print('** no instance found **')
 
-    def do_all(self, line):
-        """
-        Prints all string representation of all instances
-        based or not on the class name. Ex: $ all BaseModel or $ all
-        """
-        args = line.split()
-        result = []
+    def do_all(self, arg):
+        """Prints all string representation of all instances"""
+
+        args = arg.split()
+        res = []
         if len(args) != 0:
+
             if args[0] not in HBNBCommand.classes:
                 print('** class doesn\'t exist **')
                 return
+
             else:
                 for key, value in storage.all().items():
                     if type(value).__name__ == args[0]:
-                        result.append(value.__str__())
+                        res.append(value.__str__())
+
         else:
             for key, value in storage.all().items():
-                result.append(value.__str__())
-        print(result)
+                res.append(value.__str__())
 
-    def do_update(self, line):
-        """
-        Updates an instance based on the class name and
-        id by adding or updating attribute
-        (save the change into the JSON file). Ex: $ update
-        BaseModel 1234-1234-1234 email "aibnb@mail.com".
-        update <class name> <id> <attribute name> "<attribute value>"
-        """
-        args = line.split()
-        if line == '':
+        print(res)
+
+    def do_update(self, arg):
+        """Updates an instance based on the class name and id"""
+
+        args = arg.split()
+
+        if arg == '':
             print('** class name missing **')
+
         elif args[0] not in HBNBCommand.classes:
             print('** class doesn\'t exist **')
+
         elif len(args) < 2:
             print('** instance id missing **')
 
         elif len(args) < 3:
             print('** attribute name missing **')
+
         elif len(args) < 4:
             print('** value missing **')
+
         else:
             classname = args[0]
             objid = args[1]
