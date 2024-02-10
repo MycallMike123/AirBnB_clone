@@ -159,14 +159,14 @@ saves it, and prints the id"""
             if attr in oob:
                 print('** attribute can\'t be updated **')
                 return
-            """
-            string validity test begins (incomplete)
-            """
+
+            """string validity test"""
             if value[0] == '"' and value[-1] == '"' or value[0] == "'":
                 if value[0] != '"':
                     print("** A string argument must be between \
 double quotes **")
                     return
+
                 value = value[1:-1]
             else:
                 try:
@@ -174,24 +174,32 @@ double quotes **")
                         if c == '.':
                             value = float(value)
                             break
+
                     else:
                         value = int(value)
+
                 except ValueError:
                     print("** A string argument must \
 be between double quote **")
+
             if (attr[0] == '"' and attr[-1] == '"')\
                or attr[0] == "'" or attr[-1] == "'":
+
                 if attr[0] != '"' or attr[-1] == "'":
                     print("** A string argument must be between \
 double quotes **")
                     return
+
                 attr = attr[1:-1]
-            """ string validity test ends """
+            """string validity test ends"""
+
             key = classname + '.' + objid
+
             try:
                 instance = storage.all()[key]
                 instance.__dict__[attr] = value
                 instance.save()
+
             except KeyError:
                 print('** no instance found **')
 
