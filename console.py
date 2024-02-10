@@ -1,98 +1,110 @@
 #!/usr/bin/python3
-"""
-Airbnb Console
-"""
+"""Module for the Airbnb Console"""
+
 import cmd
-from models.base_model import BaseModel
 from models.__init__ import storage
+from models.amenity import Amenity
+from models.city import City
+from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
-from models.amenity import Amenity
 from models.review import Review
-from models.city import City
 from models.state import State
 
 
 class HBNBCommand(cmd.Cmd):
-    """
-    The entry point for the command interpreter
-    """
-    prompt = '(hbnb) '
+    """Command interpreter for the HBNB project"""
+
+    prompt = "(hbnb) "
+
     classes = ['BaseModel', 'User', 'Place', 'State',
                'City', 'Amenity', 'Review']
+
     dotcmds = ['.all()', '.count()']
 
-#   def parseline(self, line):
-#       print (f'parseline({line}) =>')
-#       ret = cmd.Cmd.parseline(self, line)
-#       print (ret)
-#       return ret
+    def do_create(self, arg):
+        """Creates a new instance of BaseModel or User, \
+saves it, and prints the id"""
 
-    def do_create(self, line):
-        """Creates a new instance of a given class, saves it \
-(to the JSON file) and prints the id."""
-        if line == '':
+        if arg == '':
             print('** class name missing **')
-        elif line not in HBNBCommand.classes:
+
+        elif arg not in HBNBCommand.classes:
             print('** class doesn\'t exist **')
+
         else:
-            if line == 'BaseModel':
+            if arg == 'BaseModel':
                 obj = BaseModel()
-            elif line == 'User':
+
+            elif arg == 'User':
                 obj = User()
-            elif line == 'Place':
+
+            elif arg == 'Place':
                 obj = Place()
-            elif line == 'State':
+
+            elif arg == 'State':
                 obj = State()
-            elif line == 'City':
+
+            elif arg == 'City':
                 obj = City()
-            elif line == 'Amenity':
+
+            elif arg == 'Amenity':
                 obj = Amenity()
-            elif line == 'Review':
+
+            elif arg == 'Review':
                 obj = Review()
+
             storage.save()
             print(obj.id)
 
-    def do_show(self, line):
-        """Prints the string representation of an instance based \
-on the class name and id."""
-        args = line.split()
-        if line == '':
+    def do_show(self, arg):
+        """Prints the string representation of an instance"""
+
+        args = arg.split()
+        if arg == '':
             print('** class name missing **')
+
         elif args[0] not in HBNBCommand.classes:
             print('** class doesn\'t exist **')
+
         else:
             if len(args) < 2:
                 print('** instance id missing **')
+
             else:
                 classname = args[0]
                 objid = args[1]
                 key = classname + '.' + objid
+
                 try:
                     print(storage.all()[key])
+
                 except KeyError:
                     print('** no instance found **')
 
-    def do_destroy(self, line):
-        """
-        Deletes an instance based on the class name
-        and id (save the change into the JSON file)
-        """
-        args = line.split()
-        if line == '':
+    def do_destroy(self, arg):
+        """Deletes an instance based on the class name and id"""
+
+        args = arg.split()
+        if arg == '':
             print('** class name missing **')
+
         elif args[0] not in HBNBCommand.classes:
             print('** class doesn\'t exist **')
+
         else:
             if len(args) < 2:
                 print('** instance id missing **')
+
             else:
                 classname = args[0]
                 objid = args[1]
                 key = classname + '.' + objid
+
                 try:
                     del storage.all()[key]
                     storage.save()
+
                 except KeyError:
                     print('** no instance found **')
 
