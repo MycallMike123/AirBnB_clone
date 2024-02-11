@@ -602,7 +602,6 @@ must be between double quotes **")
                 except KeyError:
                     print('** no instance found **')
 
-
         else:
             return cmd.Cmd.default(self, arg)
 
